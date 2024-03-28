@@ -1,0 +1,38 @@
+CREATE TABLE Library (
+    CardNo varchar(5), PRIMARY KEY
+    Surname varchar(15),
+    name varchar(15),
+    Address text(150),
+    Name varchar NOT NULL,
+    Surname varchar NOT NULL,
+    Birthday_date varchar NOT NULL,
+    ADD CONSTRAINT char_check Check(gender In ('F','M')),
+    Phone_No varchar(15)
+);
+
+CREATE TABLE  Employess(
+    emp_id int Identity(1,1) PRIMARY KEY,
+    Surname varchar(15) NOT NULL,
+    Name varchar(15) NOT NULL,
+    Birthay_date NOT NULL,
+    Emp_Date date NOT NULL CHECK(Emp_Date >= Birthay_date)
+    
+);
+
+-- create a table
+CREATE TABLE  Publishers(
+    pub_id int Identity(1,1) PRIMARY KEY,
+    Name varchar(50) NOT NULL,
+    City varchar(50) NOT NULL,
+    Phone_No varchar(15)
+    
+);
+
+CREATE TABLE  Books(
+    BookID varchar(5) PRIMARY KEY,
+    FOREIGN KEY (Pub_ID) REFERENCES Publishers(pub_id),
+    Type varchar(50) CHECK (Type IN('novel','Historical','for kids','poems','crime sotry','science fiction','sciense')),
+    Price MONEY NOT NULL,
+    Title varchar(40)
+);
+
