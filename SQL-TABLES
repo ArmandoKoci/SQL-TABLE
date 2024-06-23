@@ -1,38 +1,300 @@
-CREATE TABLE Library (
-    CardNo varchar(5), PRIMARY KEY
-    Surname varchar(15),
-    name varchar(15),
-    Address text(150),
-    Name varchar NOT NULL,
-    Surname varchar NOT NULL,
-    Birthday_date varchar NOT NULL,
-    ADD CONSTRAINT char_check Check(gender In ('F','M')),
-    Phone_No varchar(15)
+CREATE TABLE Client (
+  id_card VARCHAR(10) PRIMARY KEY,
+  name VARCHAR(20) NOT NULL,
+  surname VARCHAR(20) NOT NULL,
+  country VARCHAR(25) NOT NULL,
+  dob DATETIME  NOT NULL,
+  gender VARCHAR(1) NOT NULL,
+  age INTEGER NOT NULL,
+  total_shippings INTEGER NOT NULL,
+  date_of_shipping DATETIME
+);
+INSERT INTO Client(id_card, name, surname, country, dob, gender, age, total_shippings, date_of_shipping)
+VALUES("ΕΠ 123", "Ευάγγελος", "Ανανίου", "Ελλάδα", "2003-12-25", "Α", 21, 12, "2024-04-09"), 
+      ("ΕΡ 111", "Γεώργιος", "Ρέκατας", "Αυσταλία", "2000-04-12", "Α", 16, 4, "2024-06-12"),
+      ("ΕΡ 101", "Νικόλαος", "Ρέκατας", "Γερμανία", "2005-04-11", "Α", 16, 41, "2024-05-11");
+
+------------------------------------------------------------------------------------
+CREATE TABLE Supplier (
+  id_card VARCHAR(10) PRIMARY KEY,
+  name VARCHAR(20) NOT NULL
+);
+INSERT INTO Supplier(id_card, name)
+VALUES("ΕΠ 123", "Βαγγέλης"), 
+      ("ΑΠ 321", "Γεώργιος"),
+      ("ΟΠ 546", "Μιχάλης"),
+      ("ΙΠ 104", "Άγγελος"),
+      ("ΕΡ 179", "Βασίλης"),
+      ("ΘΙ 014", "Βαγκος"),
+      ("ΝΜ 001", "Πέτρος"),
+      ("ΖΧ 558", "Αντώνης"),
+      ("ΔΣ 821", "Μαρία"),
+      ("ΩΒ 055", "Ευαγγελία"),
+      ("ΓΗ 099", "Αθηνά"),
+      ("ΞΚ 009", "Αρμάντο"),
+      ("ΒΚ 007", "Κώστας"),
+      ("ΣΕ 008", "Μάνος"),
+      ("ΤΥ 001", "Γιάννης"),
+      ("ΙΟ 004", "Ανάργυρος"),
+      ("ΠΣ 247", "Λεγκολάς");
+------------------------------------------------------------------------------------
+CREATE TABLE Store (
+  name VARCHAR(25) PRIMARY KEY,
+  address VARCHAR(25) NOT NULL,
+  supervisor VARCHAR(25) NOT NULL,
+  number_of_emp INTEGER NOT NULL
 );
 
-CREATE TABLE  Employess(
-    emp_id int Identity(1,1) PRIMARY KEY,
-    Surname varchar(15) NOT NULL,
-    Name varchar(15) NOT NULL,
-    Birthay_date NOT NULL,
-    Emp_Date date NOT NULL CHECK(Emp_Date >= Birthay_date)
+INSERT INTO Store(name, address, supervisor, number_of_emp)
+VALUES("Βιανέξ", "Γαλατσίου 54", "Γιαννακόπουλος Ιωάννης", 202),
+      ("Ολυμπιακός", "Πειραιά 122", "Μαρινάκης Ευάγγελος", 142);
+------------------------------------------------------------------------------------
+CREATE TABLE Store_products(
+    id_card INTEGER PRIMARY KEY,
+    id_store VARCHAR(25),
+    id_product VARCHAR(25),
+    quantity INTEGER,
+    date_of_sell DATE
+);
+INSERT INTO Store_products(id_card, id_store, id_product, quantity, date_of_sell)
+VALUES(1, "Βιανέξ", "Α221", 100, "2022-01-01"),
+      (2, "Βιανέξ", "Α322", 200, "2023-06-01"),
+    (5, "Βιανέξ1", "Α321", 400, "2023-08-01"),
+      (3, "Ολυμπιακός", "Α345", 100, "2024-01-01"),
+      (4, "Ολυμπιακός", "Α346", 25, "2025-06-01");
+---------------------------------------------------------------------------------------
+CREATE TABLE Employee (
+  id_card VARCHAR(10) PRIMARY KEY,
+  name VARCHAR(25) NOT NULL,
+  surname VARCHAR(25) NOT NULL,
+  country VARCHAR(25) NOT NULL,
+  dob DATETIME NOT NULL,
+  gender VARCHAR(1) NOT NULL,
+  age INTEGER NOT NULL,
+  date_of_recruitment DATETIME,
+  date_of_dismissal DATETIME
+);
+
+INSERT INTO Employee(id_card, name, surname,
+                     country, dob, gender, age, 
+                     date_of_recruitment, date_of_dismissal)
+VALUES("ΚΙ 3529", "Αναστάσιος", "Άδωνης", "Ινδονησία",
+      "14/04/1994", "Α", 42, "2007-12-25", "16/12/2013"),
+    ("ΑΔ 1000", "Δημήτριος", "Αλεξίου", "Ταιλάνδη",
+      "21/04/2000", "Α", 24, "2006-12-25", "10/3/2023"),
+    ("ΚΙ 3520", "Γεώργιος", "Ρέκατας", "Αυσταλία", "2005-12-25", "Α", 30, "2008-12-25", "2013-12-25"), 
+     ("ΚΙ 1111", "Ευάγγελος", "Ρέκατας", "Αυσταλία", "2004-12-25", "Α", 30, "2005-12-25", "2023-12-25");
+------------------------------------------------------------------------------------
+CREATE TABLE Products (
+  id_code VARCHAR(25) PRIMARY KEY,
+  name VARCHAR(25) NOT NULL,
+  category VARCHAR(25) NOT NULL,
+  brand VARCHAR(25) NOT NULL,
+  country VARCHAR(25) NOT NULL,
+  sizee INTEGER NOT NULL,
+  category_fpa INTEGER NOT NULL,
+  supplier VARCHAR(25),
+  quantity INTEGER NOT NULL,
+  second_id INTEGER,
+  date_of_import DATETIME,
+  price INTEGER,
+  product_sell VARCHAR(3)  
+        
+);
+
+INSERT INTO Products(id_code, name, category,
+                     brand, country, sizee, category_fpa, 
+                     supplier, second_id, quantity, date_of_import, price,product_sell)
+VALUES("Α221", "Γιαούρτι πρωτείνης", "Γαλακτωκομικά", "MaxiProtein1",
+      "Ελλάδα", 20, "13", "Αφοί Ντελόπουλοι", "Δ", 50, "2024-11-21", 40,"2024-01-09"),
     
-);
-
--- create a table
-CREATE TABLE  Publishers(
-    pub_id int Identity(1,1) PRIMARY KEY,
-    Name varchar(50) NOT NULL,
-    City varchar(50) NOT NULL,
-    Phone_No varchar(15)
+    ("Α322", "Milkshake πολυβιταμινούχο", "Γαλακτωκομικά", "MaxiProtein2",
+      "Ελλάδα", 25, "13", "Αφοί Ντελόπουλοι", "Δ", 75, "2024-05-21", 30,"2000-02-08"), 
     
+    ("Α345", "Γάλα αμυγδάλου άπαχο", "Γαλακτωκομικά", "MaxiProtein3",
+      "Ελλάδα", 10, "13", "Αφοί Ντελόπουλοι", "Δ", 45, "2024-05-21", 50,"2023-06-15"), 
+    
+    ("Α346", "Γιαούρτι αμυγδάλου άπαχο", "Γαλακτωκομικά", "MaxiProtein4",
+      "Ελλάδα", 34, "13", "Αφοί Ντελόπουλοι", "Δ", 12, "2024-11-15", 10,"2024-10-29");
+-----------------------------------------------------------------------------------
+CREATE TABLE Products_category (
+  name VARCHAR(25) PRIMARY KEY,
+  category VARCHAR(25) NOT NULL
 );
 
-CREATE TABLE  Books(
-    BookID varchar(5) PRIMARY KEY,
-    FOREIGN KEY (Pub_ID) REFERENCES Publishers(pub_id),
-    Type varchar(50) CHECK (Type IN('novel','Historical','for kids','poems','crime sotry','science fiction','sciense')),
-    Price MONEY NOT NULL,
-    Title varchar(40)
+INSERT INTO Products_category(name, category)
+VALUES("Γαλακτοκωμικά", "Α"),
+    ("Κρεατικά", "Β");
+
+CREATE TABLE Invoice(
+    id_card INTEGER PRIMARY KEY,
+    date_of_invoice DATE,
+    customer_id VARCHAR(25)
 );
 
+INSERT INTO Invoice(id_card, date_of_invoice, customer_id)
+VALUES(1, "2024-04-09", "ΕΠ 123"), 
+    (2, "2024-04-12", "ΤΥ 001"), 
+    (3, "2024-05-14", "ΑΠ 321"),
+    (4, "2024-06-20", "ΕΡ 101"),
+    (5, "2024-07-23", "ΟΠ 546"),
+    (6, "2024-08-12", "ΙΠ 104"),
+    (7, "2024-09-14", "ΕΡ 101"),
+    (8, "2024-10-14", "ΘΙ 014"),
+    (9, "2024-12-14", "ΕΡ 101"),
+    (10, "2024-11-14", "ΝΜ 001"),
+    (11, "2024-03-14", "ΕΡ 101"),
+    (12, "2024-08-14", "ΕΡ 101"),
+    (13, "2024-12-14", "ΓΗ 099"),
+    (14, "2024-08-5", "ΕΡ 101"),
+    (15, "2024-12-1", "ΞΚ 009"),
+    (16, "2024-12-14", "ΕΡ 101");
+    
+
+
+-------------------------------------------------------------------------------------
+CREATE TABLE Invoice_products(
+    id_card INTEGER PRIMARY KEY,
+    Invoice_id INTEGER,
+    product_id VARCHAR(25),
+    quantity INTEGER,
+    date_of_sell DATE
+);
+INSERT INTO Invoice_products(id_card, Invoice_id, product_id, quantity, date_of_sell)
+VALUES(1, 1, "Α221", 25, "2024-01-01"), 
+      (2, 1, "Α322", 15, "2024-01-30"),
+      (3, 2, "Α345", 2, "2024-02-01"),
+      (4, 3, "Α322", 2, "2024-02-30"),
+      (5, 4, "Α345", 10, "2024-03-01"),
+      (6, 5, "Α346", 15, "2024-03-30"),
+      (7, 6, "Α221", 20, "2024-04-01"),
+      (8, 7, "Α345", 25, "2024-04-30"),
+      (9, 8, "Α221", 39, "2024-05-01"),
+      (10, 9, "Α322", 11, "2024-05-30"),
+      (11, 10, "Α346", 14, "2024-06-01"),
+      (12, 11, "Α345", 13, "2024-06-30");
+    
+--------------------------------------------------------------------------------------
+CREATE TABLE Supplier_product(
+    id_card INTEGER PRIMARY KEY,
+    supplier_id VARCHAR(25),
+    product_id VARCHAR(25),
+    quantity INTEGER
+);
+--------------------------------------------------------------------------------------
+INSERT INTO Supplier_product(id_card, supplier_id, product_id, quantity)
+VALUES(1, "ΕΠ 123", "Α221", 5),
+      (2, "ΤΥ 001", "Α345", 7), 
+      (3, "ΑΠ 321", "Α346", 2),
+      (4, "ΑΠ 321", "Α322", 15),
+      (5, "ΟΠ 546", "Α322", 16),
+      (6, "ΙΠ 104", "Α322", 1),
+      (7, "ΕΡ 179", "Α345", 70),
+      (8, "ΘΙ 014", "Α221", 77),
+      (9, "ΝΜ 001", "Α346", 99),
+      (10, "ΖΧ 558", "Α221", 13),
+      (11, "ΔΣ 821", "Α345", 12),
+      (12, "ΩΒ 055", "Α322", 134),
+      (13, "ΓΗ 099", "Α346", 41),
+      (14, "ΞΚ 009", "Α221", 31),
+      (15, "ΒΚ 007", "Α346", 4),
+      (16, "ΣΕ 008", "Α345", 18),
+      (17, "ΙΟ 004", "Α346", 22),
+      (18, "ΠΣ 247", "Α345", 28),
+      (19, "ΤΥ 001", "Α322", 30);
+
+-------------------------------------------------------------------------------------
+/*
+--Ερώτημα 1
+SELECT name, id_code FROM Products
+WHERE name LIKE '%Mil%';
+*/
+
+/*
+--Ερώτημα 2
+SELECT Invoice.id_card, Invoice.date_of_invoice, Invoice_products.quantity, Products.price, Invoice_products.quantity*Products.price as total FROM Invoice
+INNER JOIN Invoice_products ON Invoice.id_card=Invoice_products.Invoice_id
+INNER JOIN Products, Supplier_product ON Products.id_code=Invoice_products.product_id and Supplier_product.product_id=Invoice_products.product_id
+WHERE Invoice.date_of_invoice BETWEEN '2023-01-01' AND '2024-07-05' 
+GROUP BY total;
+*/
+
+/*
+--Ερώτημα 3
+SELECT *, MAX(total_shippings)  FROM Client
+WHERE date_of_shipping BETWEEN '2024-01-11' AND '2025-01-01';
+*/
+
+
+--Ερώτημα 4
+/*
+SELECT p.name, p.sizee*p.quantity, p.date_of_import as volume FROM Products p
+INNER JOIN Store_products  sp ON p.id_code=sp.id_product  
+WHERE sp.date_of_sell BETWEEN '2024-01-11' AND '2025-01-01'
+ORDER BY p.sizee*p.quantity;
+*/
+
+
+/*
+--Ερώτημα 5 
+SELECT brand FROM Products
+WHERE product_sell BETWEEN '2010-01-01' AND '2024-12-31'   
+GROUP BY brand;
+*/
+
+
+/*
+--Ερώτημα 6
+SELECT Products.id_code, Invoice_products.quantity, Invoice_products.date_of_sell FROM Products
+INNER JOIN Invoice_products ON Invoice_products.product_id=Products.id_code
+WHERE Invoice_products.date_of_sell BETWEEN '2024-01-01' AND '2024-08-01';
+*/
+
+
+--Ερώτημα 7 
+/*
+SELECT s.id_store,s.id_product,s.quantity,s.date_of_sell FROM Store_products s
+INNER JOIN Products p ON p.id_code=s.id_store 
+WHERE p. = (SELECT )
+*/
+
+SELECT id_store,quantity,id_product,date_of_sell FROM Store_products
+/*WHERE date_of_sell BETWEEN DATEADD(Year,+1,GETDATE('2023-01-01')) AND GetDate('2024-01-01')*/
+WHERE  date_of_sell > '2000-01-01' 
+
+/*SELECT s.id_store, s.quantity FROM Store_products s
+INNER JOIN Products p ON p.id_code=s.id_store
+ORDER BY */
+
+
+/*
+--Ερώτημα 8 OLD VERSION
+SELECT id_store, Store_products.quantity, Products.price, MAX(Products.price*Store_products.quantity)
+FROM Store_products INNER JOIN Products 
+WHERE Products.id_code=Store_products.id_product
+AND Store_products.date_of_sell BETWEEN '2024-01-01' AND '2025-03-01'
+GROUP BY Products.price*Store_products.quantity;
+
+--Ερώτημα 8 NEW VERSION (PATCHED)
+SELECT Store.name, Store_products.id_product, Store_products.quantity*Products.price FROM Store
+INNER JOIN Store_products ON Store.name=Store_products.id_store
+INNER JOIN Products ON Store_products.id_product=Products.id_code
+WHERE Store_products.date_of_sell BETWEEN '2024-01-01' AND '2024-07-01';
+*/
+
+
+/*
+--Ερώτημα 9
+SELECT *
+FROM Employee
+INNER JOIN Client  ON  Client.name=Employee.name;
+*/
+
+
+/*
+--Ερώτημα 10
+SELECT Supplier.name, Supplier_product.supplier_id, Products.id_code, Products.name, Supplier_product.quantity  FROM Supplier_product
+INNER JOIN Products ON Supplier_product.product_id=Products.id_code
+INNER JOIN Supplier ON Supplier_product.supplier_id=Supplier.id_card
+GROUP BY Supplier_product.quantity;
+*/
